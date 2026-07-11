@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "title": "The Silent Craftsman",
+    "category": "Documentary",
+    "description": "A short documentary on a woodcarver in the Himalayan foothills.",
+    "image": "/images/portfolio-doc.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Aurora Fragrance",
+    "category": "Commercial",
+    "description": "60-second luxury perfume brand film.",
+    "image": "/images/portfolio-commercial.jpg"
+  },
+  {
+    "id": "3",
+    "title": "Neon Nights",
+    "category": "Music Videos",
+    "description": "Music video edit for an emerging indie artist.",
+    "image": "/images/portfolio-music.jpg"
+  },
+  {
+    "id": "4",
+    "title": "The Story Room",
+    "category": "Podcasts",
+    "description": "Multi-cam podcast edit with dynamic pacing.",
+    "image": "/images/portfolio-podcast.jpg"
+  },
+  {
+    "id": "5",
+    "title": "Above the Clouds",
+    "category": "Travel",
+    "description": "Cinematic travel film from the Himalayas.",
+    "image": "/images/portfolio-travel.jpg"
+  },
+  {
+    "id": "6",
+    "title": "Vertex Corp",
+    "category": "Corporate",
+    "description": "Corporate brand story and culture film.",
+    "image": "/images/portfolio-corporate.jpg"
+  }
+]

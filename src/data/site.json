@@ -1,0 +1,59 @@
+{
+  "hero": {
+    "title": "Hi, I'm Narayan Khatri",
+    "subtitle": [
+      "Video Editor",
+      "Documentary Filmmaker",
+      "Visual Storyteller"
+    ],
+    "available": "HAHAHAHA"
+  },
+  "about": {
+    "image": "https://pub-ff9b9dd24f8a4e5c82320724d772390d.r2.dev/narayan-portfolio/uploads/1783749391844-294137072_866191458104309_3724371167581781978_n.jpg",
+    "yearsCraft": 2,
+    "description": "I'm a passionate video editor with over 2 years of experience creating documentaries, commercial videos, podcasts, travel films, promotional content, and cinematic edits. I specialize in storytelling through visuals and motion graphics.",
+    "stats": [
+      {
+        "label": "Videos Edited",
+        "value": "100+"
+      },
+      {
+        "label": "Years Experience",
+        "value": "2+"
+      },
+      {
+        "label": "Happy Clients",
+        "value": "30+"
+      },
+      {
+        "label": "Combined Views",
+        "value": "10M+"
+      }
+    ],
+    "resumeUrl": "#"
+  },
+  "showreel": {
+    "title": "The Showreel",
+    "description": "A 90-second cut of my favorite frames from the last 12 months — documentaries, commercials, music videos and travel.",
+    "thumbnail": "/images/portfolio-travel.jpg",
+    "videoUrl": "#"
+  },
+  "instagram": {
+    "username": "narayan.edits",
+    "reels": []
+  },
+  "bts": {
+    "images": [
+      "/images/bts-1.jpg",
+      "/images/bts-2.jpg",
+      "/images/bts-3.jpg"
+    ]
+  },
+  "contact": {
+    "email": "hello@narayankhatri.com",
+    "whatsapp": "+977 98 4321 0000",
+    "location": "Kathmandu, Nepal — Available worldwide",
+    "instagram": "@narayan.edits"
+  },
+  "social": {}
+}

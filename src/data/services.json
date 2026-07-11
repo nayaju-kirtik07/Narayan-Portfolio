@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Video Editing",
+    "description": "Cinematic edits with pacing, rhythm and story-first cuts.",
+    "icon": "Video Editing"
+  },
+  {
+    "id": "2",
+    "title": "Documentary Production",
+    "description": "End-to-end doc production, from research to final delivery.",
+    "icon": "Documentary Production"
+  },
+  {
+    "id": "3",
+    "title": "Motion Graphics",
+    "description": "Custom motion graphics, titles and animated overlays.",
+    "icon": "Motion Graphics"
+  },
+  {
+    "id": "4",
+    "title": "Color Grading",
+    "description": "Cinematic color grading and consistent looks across projects.",
+    "icon": "Color Grading"
+  },
+  {
+    "id": "5",
+    "title": "YouTube Editing",
+    "description": "Retention-optimized edits crafted for the algorithm.",
+    "icon": "YouTube Editing"
+  },
+  {
+    "id": "6",
+    "title": "Social Media Content",
+    "description": "Vertical reels and shorts made to stop the scroll.",
+    "icon": "Social Media Content"
+  }
+]
