@@ -5,6 +5,7 @@ export interface Project {
   description: string;
   image: string;
   videoUrl?: string;
+  youtubeUrl?: string;
 }
 
 export interface Service {
@@ -36,6 +37,7 @@ export interface SiteData {
     title: string;
     subtitle: string[];
     available: string;
+    backgroundVideo?: string;
   };
   about: {
     image: string;

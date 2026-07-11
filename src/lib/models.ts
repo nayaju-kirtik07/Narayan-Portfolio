@@ -6,6 +6,7 @@ const ProjectSchema = new Schema({
   description: { type: String, default: "" },
   image: { type: String, default: "" },
   videoUrl: { type: String, default: "" },
+  youtubeUrl: { type: String, default: "" },
 }, { timestamps: true });
 
 const ServiceSchema = new Schema({
@@ -34,6 +35,7 @@ const SiteDataSchema = new Schema({
     title: { type: String, default: "Hi, I'm Narayan Khatri" },
     subtitle: [{ type: String }],
     available: { type: String, default: "Available for projects — 2026" },
+    backgroundVideo: { type: String, default: "" },
   },
   about: {
     image: { type: String, default: "/images/portrait.jpg" },

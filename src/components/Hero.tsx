@@ -8,13 +8,28 @@ interface HeroProps {
     title: string;
     subtitle: string[];
     available: string;
+    backgroundVideo?: string;
   };
 }
 
 export default function Hero({ data }: HeroProps) {
+  const hasVideo = data.backgroundVideo && data.backgroundVideo !== "#";
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      {hasVideo ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 z-0 w-full h-full object-cover"
+          src={data.backgroundVideo}
+        />
+      ) : (
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      )}
+      <div className="absolute inset-0 z-[1] bg-black/50" />
 
       <div className="relative z-20 container-max px-6 md:px-12 lg:px-24 text-center">
         <motion.p

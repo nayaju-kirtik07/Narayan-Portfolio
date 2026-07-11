@@ -89,6 +89,7 @@ export default function AdminPage() {
               { key: "description", label: "Description", type: "textarea" },
               { key: "image", label: "Thumbnail Image URL", accept: "image/*" },
               { key: "videoUrl", label: "Video URL (optional)", accept: "video/*" },
+              { key: "youtubeUrl", label: "YouTube URL (optional)" },
             ]}
             onSave={async (item) => {
               await fetch("/api/projects", {
@@ -408,6 +409,7 @@ function SiteSettingsPanel({
         <Section title="Hero">
           <Field label="Available Text" value={form.hero.available} onChange={(v) => update("hero.available", v)} />
           <Field label="Title" value={form.hero.title} onChange={(v) => update("hero.title", v)} />
+          <FieldUpload label="Background Video" value={form.hero.backgroundVideo || ""} onChange={(v) => update("hero.backgroundVideo", v)} accept="video/*" />
         </Section>
 
         <Section title="About">

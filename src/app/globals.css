@@ -5,6 +5,9 @@
   --foreground: #fafafa;
   --accent: #d4a853;
   --accent-hover: #c49a3f;
+  --orange: #f97316;
+  --orange-hover: #ea580c;
+  --orange-light: #ffedd5;
   --muted: #a1a1aa;
 }
 
@@ -13,6 +16,9 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-orange: var(--orange);
+  --color-orange-hover: var(--orange-hover);
+  --color-orange-light: var(--orange-light);
   --color-muted: var(--muted);
   --font-sans: "Inter", var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);

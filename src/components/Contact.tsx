@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MessageCircle, MapPin, Send, Camera } from "lucide-react";
+import { Mail, MessageCircle, MapPin, Send, Camera, CheckCircle } from "lucide-react";
 import type { SiteData } from "@/lib/types";
 
 interface ContactProps {
@@ -9,6 +10,35 @@ interface ContactProps {
 }
 
 export default function Contact({ data }: ContactProps) {
+  const [form, setForm] = useState({ name: "", email: "", projectType: "", budget: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSent(true);
+        setForm({ name: "", email: "", projectType: "", budget: "", message: "" });
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to send");
+      }
+    } catch {
+      setError("Something went wrong");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <section id="contact" className="section-padding">
       <div className="container-max">
@@ -58,17 +88,23 @@ export default function Contact({ data }: ContactProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-5"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm"
               />
               <input
                 type="email"
                 placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm"
               />
             </div>
@@ -76,25 +112,40 @@ export default function Contact({ data }: ContactProps) {
               <input
                 type="text"
                 placeholder="Project Type"
+                value={form.projectType}
+                onChange={(e) => setForm({ ...form, projectType: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm"
               />
               <input
                 type="text"
                 placeholder="Budget"
+                value={form.budget}
+                onChange={(e) => setForm({ ...form, budget: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm"
               />
             </div>
             <textarea
               rows={4}
               placeholder="Message"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              required
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm resize-none"
             />
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-background rounded-full font-medium hover:bg-accent-hover transition-colors"
-            >
-              Send Message <Send size={16} />
-            </button>
+            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {sent ? (
+              <div className="flex items-center gap-2 px-6 py-3 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                <CheckCircle size={16} /> Message sent! I'll get back soon.
+              </div>
+            ) : (
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-background rounded-full font-medium hover:bg-accent-hover transition-colors disabled:opacity-50"
+              >
+                <Send size={16} /> {sending ? "Sending..." : "Send Message"}
+              </button>
+            )}
           </motion.form>
         </div>
 

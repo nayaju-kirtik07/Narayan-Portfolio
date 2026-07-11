@@ -17,7 +17,7 @@ function toJSONList(docs: any[]): any[] {
 }
 
 function resolveProject(p: ProjectType): ProjectType {
-  return { ...p, image: resolveMediaUrl(p.image), videoUrl: resolveMediaUrl(p.videoUrl) };
+  return { ...p, image: resolveMediaUrl(p.image), videoUrl: resolveMediaUrl(p.videoUrl), youtubeUrl: p.youtubeUrl };
 }
 
 function resolveService(s: ServiceType): ServiceType {
@@ -35,6 +35,7 @@ function resolveReel(r: Reel): Reel {
 function resolveSiteData(data: SiteData): SiteData {
   return {
     ...data,
+    hero: { ...data.hero, backgroundVideo: resolveMediaUrl(data.hero.backgroundVideo) },
     about: { ...data.about, image: resolveMediaUrl(data.about.image) },
     showreel: {
       ...data.showreel,
@@ -51,7 +52,7 @@ function resolveSiteData(data: SiteData): SiteData {
 
 function stripProject(p: ProjectType): any {
   const { id, ...rest } = p;
-  return { ...rest, image: stripBaseUrl(rest.image), videoUrl: stripBaseUrl(rest.videoUrl) };
+  return { ...rest, image: stripBaseUrl(rest.image), videoUrl: stripBaseUrl(rest.videoUrl), youtubeUrl: rest.youtubeUrl || "" };
 }
 
 function stripService(s: ServiceType): any {
@@ -185,6 +186,7 @@ const DEFAULT_SITE_DATA = {
     title: "Hi, I'm Narayan Khatri",
     subtitle: ["Video Editor", "Documentary Filmmaker", "Visual Storyteller"],
     available: "Available for projects — 2026",
+    backgroundVideo: "",
   },
   about: {
     image: "/images/portrait.jpg",
