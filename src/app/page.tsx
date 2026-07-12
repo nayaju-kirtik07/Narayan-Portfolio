@@ -4,19 +4,20 @@ import About from "@/components/About";
 import Showreel from "@/components/Showreel";
 import Portfolio from "@/components/Portfolio";
 import Services from "@/components/Services";
-import BTS from "@/components/BTS";
+import ReelsSection from "@/components/ReelsSection";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { getProjects, getServices, getTestimonials, getSiteData } from "@/lib/data";
+import { getProjects, getServices, getTestimonials, getReels, getSiteData } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [projects, services, testimonials, siteData] = await Promise.all([
+  const [projects, services, testimonials, reels, siteData] = await Promise.all([
     getProjects(),
     getServices(),
     getTestimonials(),
+    getReels(),
     getSiteData(),
   ]);
 
@@ -29,7 +30,7 @@ export default async function Home() {
         <Showreel data={siteData.showreel} />
         <Portfolio projects={projects} />
         <Services services={services} />
-        <BTS images={siteData.bts.images} />
+        <ReelsSection reels={reels} />
         <Testimonials testimonials={testimonials} />
         <Contact data={siteData.contact} />
       </main>

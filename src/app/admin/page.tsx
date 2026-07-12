@@ -85,7 +85,16 @@ export default function AdminPage() {
             items={projects}
             fields={[
               { key: "title", label: "Title" },
-              { key: "category", label: "Category" },
+              { key: "category", label: "Category", type: "select", options: [
+                { label: "Commercial", value: "Commercial" },
+                { label: "Documentary", value: "Documentary" },
+                { label: "Music Video", value: "Music Video" },
+                { label: "Travel", value: "Travel" },
+                { label: "Promotional", value: "Promotional" },
+                { label: "Podcast", value: "Podcast" },
+                { label: "Wedding", value: "Wedding" },
+                { label: "Other", value: "Other" },
+              ] },
               { key: "description", label: "Description", type: "textarea" },
               { key: "image", label: "Thumbnail Image URL", accept: "image/*" },
               { key: "videoUrl", label: "Video URL (optional)", accept: "video/*" },
@@ -191,8 +200,9 @@ export default function AdminPage() {
 interface Field {
   key: string;
   label: string;
-  type?: "text" | "textarea";
+  type?: "text" | "textarea" | "select";
   accept?: string;
+  options?: { label: string; value: string }[];
 }
 
 function FileUpload({
@@ -253,10 +263,11 @@ function CrudPanel<T extends { id: string }>({
 }: {
   items: T[];
   fields: Field[];
-  onSave: (item: T) => void;
-  onDelete: (id: string) => void;
+  onSave: (item: T) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
 }) {
   const [editing, setEditing] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<Record<string, string>>({});
 
   const startEdit = (item?: T) => {
@@ -269,12 +280,15 @@ function CrudPanel<T extends { id: string }>({
     }
   };
 
-  const save = () => {
+  const save = async () => {
+    if (saving) return;
+    setSaving(true);
     const item = {
       id: editing === "new" ? Date.now().toString() : editing!,
       ...form,
     } as unknown as T;
-    onSave(item);
+    await onSave(item);
+    setSaving(false);
     setEditing(null);
   };
 
@@ -295,7 +309,19 @@ function CrudPanel<T extends { id: string }>({
           {fields.map((field) => (
             <div key={field.key}>
               <label className="text-sm text-muted block mb-1">{field.label}</label>
-              {field.type === "textarea" ? (
+              {field.type === "select" ? (
+                <select
+                  value={form[field.key] || ""}
+                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                  className="w-full px-4 py-3 bg-background border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-colors text-sm"
+                  style={{ colorScheme: "dark" }}
+                >
+                  <option value="">Select {field.label}</option>
+                  {field.options?.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              ) : field.type === "textarea" ? (
                 <textarea
                   value={form[field.key] || ""}
                   onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
@@ -324,9 +350,10 @@ function CrudPanel<T extends { id: string }>({
           <div className="flex gap-3">
             <button
               onClick={save}
-              className="flex items-center gap-2 px-5 py-2 bg-accent text-background rounded-full text-sm font-medium hover:bg-accent-hover transition-colors"
+              disabled={saving}
+              className="flex items-center gap-2 px-5 py-2 bg-accent text-background rounded-full text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50"
             >
-              <Save size={16} /> Save
+              <Save size={16} /> {saving ? "Saving..." : "Save"}
             </button>
             <button
               onClick={() => setEditing(null)}
@@ -424,6 +451,10 @@ function SiteSettingsPanel({
           <Field label="Description" type="textarea" value={form.showreel.description} onChange={(v) => update("showreel.description", v)} />
           <FieldUpload label="Thumbnail URL" value={form.showreel.thumbnail} onChange={(v) => update("showreel.thumbnail", v)} accept="image/*" />
           <FieldUpload label="Video URL" value={form.showreel.videoUrl} onChange={(v) => update("showreel.videoUrl", v)} accept="video/*" />
+        </Section>
+
+        <Section title="Reels">
+          <p className="text-sm text-muted">Manage short video reels in the <span className="text-accent">Video Reels</span> tab above.</p>
         </Section>
 
         <Section title="Contact">
