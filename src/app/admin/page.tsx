@@ -205,6 +205,21 @@ interface Field {
   options?: { label: string; value: string }[];
 }
 
+async function directUpload(file: File): Promise<string | null> {
+  const urlRes = await fetch("/api/upload-url", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fileName: file.name, contentType: file.type }),
+  });
+  const { uploadUrl, key } = await urlRes.json();
+  if (!uploadUrl) throw new Error("Failed to get upload URL");
+
+  const uploadRes = await fetch(uploadUrl, { method: "PUT", body: file });
+  if (!uploadRes.ok) throw new Error("Direct upload failed");
+
+  return key;
+}
+
 function FileUpload({
   accept,
   onUploaded,
@@ -218,11 +233,8 @@ function FileUpload({
   const handleFile = async (file: File) => {
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.key) onUploaded(data.key);
+      const key = await directUpload(file);
+      if (key) onUploaded(key);
     } catch (err) {
       console.error("Upload failed", err);
     } finally {
@@ -534,11 +546,8 @@ function FieldUpload({
   const handleFile = async (file: File) => {
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.key) onChange(data.key);
+      const key = await directUpload(file);
+      if (key) onChange(key);
     } catch (err) {
       console.error("Upload failed", err);
     } finally {

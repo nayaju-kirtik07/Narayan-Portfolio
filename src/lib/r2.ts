@@ -50,6 +50,15 @@ export async function getSignedDownloadUrl(key: string, expiresIn = 3600) {
   return await getSignedUrl(getClient(), command, { expiresIn });
 }
 
+export async function getSignedUploadUrl(key: string, contentType: string, expiresIn = 3600) {
+  const command = new PutObjectCommand({
+    Bucket: R2_BUCKET_NAME,
+    Key: key,
+    ContentType: contentType,
+  });
+  return await getSignedUrl(getClient(), command, { expiresIn });
+}
+
 export async function listFiles(prefix?: string) {
   const command = new ListObjectsV2Command({
     Bucket: R2_BUCKET_NAME,
