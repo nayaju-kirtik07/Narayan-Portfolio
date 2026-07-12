@@ -17,9 +17,16 @@ export async function GET() {
       CORSConfiguration: {
         CORSRules: [
           {
+            AllowedOrigins: ["http://localhost:3000", "https://narayan-portfolio-yv6n.vercel.app"],
+            AllowedMethods: ["GET", "HEAD"],
+            AllowedHeaders: ["*"],
+            MaxAgeSeconds: 3600,
+          },
+          {
             AllowedOrigins: ["*"],
             AllowedMethods: ["GET", "HEAD", "PUT"],
             AllowedHeaders: ["*"],
+            ExposeHeaders: ["ETag"],
             MaxAgeSeconds: 3600,
           },
         ],
@@ -30,7 +37,7 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json({
       error: error.message,
-      hint: "Go to Cloudflare Dashboard → R2 → narayan-portfolio → CORS tab → Add rule: Origin: *, Methods: GET, HEAD, PUT, Headers: *, then Save",
+      hint: "Go to Cloudflare Dashboard → R2 → narayan-portfolio → CORS tab, paste the two-rule JSON provided, then Save",
     }, { status: 500 });
   }
 }
